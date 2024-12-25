@@ -1,0 +1,37 @@
+# version: '3.8'
+
+# services:
+#   web:
+#     build: .
+#     ports:
+#       - "8089:5000" 
+#     volumes:
+#       - .:/app
+#     environment:
+#       FLASK_ENV: development
+#       FLASK_APP: run.py
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8089:5000" 
+    volumes:
+      - .:/app
+    environment:
+      FLASK_ENV: development
+      FLASK_APP: run.py
+      DATABASE_URL: postgres://user:password@db:5432/flask_db  # Подключение к базе данных
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: flask_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/postgresql/data  # Сохранение данных базы данных между перезапусками
+
+volumes:
+  db_data:  # Определяем том для хранения данных
